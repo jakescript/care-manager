@@ -1,9 +1,9 @@
 const { Sequelize } = require('sequelize');
 const {STRING, UUID, UUIDV4, INTEGER} = Sequelize;
 
-const conn = new Sequelize('pbSQL', 'root', '', {
+const conn = new Sequelize('care_manager', 'jacob', 'captincarl69', {
     host: 'localhost',
-    dialect: 'mysql',
+    dialect: 'postgresql',
     logging: false
 });
 
