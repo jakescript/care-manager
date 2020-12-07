@@ -16,6 +16,11 @@ const User = conn.define("user", {
     name: {
         type: STRING,
         allowNull: false
+    },
+    role: {
+        type: STRING,
+        allowNull: false,
+        defaultValue: "PATIENT"
     }
 })
 
@@ -35,16 +40,18 @@ const Med = conn.define("medication", {
     }
 });
 
-Med.belongsTo(User);
 User.hasMany(Med);
+Med.belongsTo(User);
 
-User.belongsTo(User, {as: "caretaker"});
+
 User.hasMany(User, {foreignKey: "caretakerId", as: "patients"});
+User.belongsTo(User, {as: "caretaker"});
+
 
 const seed = async () => {
     await conn.sync({force: true});
     const [doc, jake, flood, ryan, advil, adderall, inhaler] = await Promise.all([
-        User.create({name: "Dr Doctor"}),
+        User.create({name: "Dr Doctor", role: "CARETAKER"}),
         User.create({name: "jake"}),
         User.create({name: "flood"}),
         User.create({name: "ryan"}),
